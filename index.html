@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PHP</title>
 </head>
 <body>
-    <h1>Hallo Welt2</h1>
+    <h1>Eingabe Playlist</h1>
+    <form action="charts.php" method="post">
+        <p>
+            Gruppe/Interpret: <input type="text" name="band"><br>
+            Titel: <input type="text" name="song"><br>
+            <input type="submit" value="send">
+            <input type="reset">
+        </p>
+    </form>
+    <hr>
+    <h1>Meine Playlist</h1>
+    <?php
+    $band = $_REQUEST['band'];
+    $song = $_REQUEST['song'];
+    if (($band != "") && ($song != ""))
+    {
+        $handle = @fopen("charts.txt", a) or die("Noch keine Playlist vorhanden!");
+        $line = "<h2> $band </h2> <h3> $song </h3>";
+        $inhalt = fwrite($handle, "$line /n");
+        fclose($handle);
+    }
+    include("charts.txt");
+    ?>
 </body>
 </html>
